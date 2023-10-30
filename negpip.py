@@ -20,9 +20,10 @@ class Negpip:
         new_clip = copy.copy(clip)
         if hasattr(new_clip.cond_stage_model, "clip_g"):
             new_clip.cond_stage_model.clip_g.encode_token_weights = hook_clip_encode_token_weights(new_clip.cond_stage_model.clip_g)
+        if hasattr(new_clip.cond_stage_model, "clip_h"):
+            new_clip.cond_stage_model.clip_h.encode_token_weights = hook_clip_encode_token_weights(new_clip.cond_stage_model.clip_h)
+        if hasattr(new_clip.cond_stage_model, "clip_l"):
             new_clip.cond_stage_model.clip_l.encode_token_weights = hook_clip_encode_token_weights(new_clip.cond_stage_model.clip_l)
-        else:
-            new_clip.cond_stage_model.encode_token_weights = hook_clip_encode_token_weights(new_clip.cond_stage_model)
         new_model = model.clone()
 
         def negpip_apply(q, k, v, extra_options):
